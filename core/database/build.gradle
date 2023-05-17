@@ -2,11 +2,12 @@ plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id("com.google.dagger.hilt.android")
-    id 'kotlin-kapt'
+    id "kotlin-kapt"
 }
 
+
 android {
-    namespace 'com.riopermana.network'
+    namespace 'com.riopermana.database'
     compileSdk 33
 
     defaultConfig {
@@ -36,15 +37,12 @@ dependencies {
     implementation project(":core:common")
     implementation project(":core:testing")
 
+    def room_version = "2.5.1"
+    implementation("androidx.room:room-runtime:$room_version")
+    implementation("androidx.room:room-ktx:$room_version")
+    kapt("androidx.room:room-compiler:$room_version")
+
     // dagger - hilt
     implementation("com.google.dagger:hilt-android:$hilt_version")
     kapt("com.google.dagger:hilt-android-compiler:$hilt_version")
-
-    // retrofit
-    def retrofit_version = "2.9.0"
-    implementation("com.squareup.retrofit2:retrofit:$retrofit_version")
-    implementation("com.squareup.moshi:moshi-kotlin:1.14.0")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
-    implementation("com.squareup.okhttp3:okhttp:4.11.0")
-
 }

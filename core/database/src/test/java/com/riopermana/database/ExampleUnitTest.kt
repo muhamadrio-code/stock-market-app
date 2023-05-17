@@ -1,4 +1,4 @@
-package com.riopermana.common
+package com.riopermana.database
 
 import org.junit.Test
 

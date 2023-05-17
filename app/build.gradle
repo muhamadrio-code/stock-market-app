@@ -2,7 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id("com.google.dagger.hilt.android")
-    id 'kotlin-kapt'
+    id "kotlin-kapt"
 }
 
 android {
@@ -20,6 +20,10 @@ android {
         vectorDrawables {
             useSupportLibrary true
         }
+    }
+
+    hilt {
+        enableAggregatingTask = true
     }
 
     buildTypes {
@@ -53,9 +57,10 @@ kapt {
 }
 
 dependencies {
-    implementation 'androidx.core:core-ktx:1.10.1'
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
-    testImplementation 'junit:junit:4.13.2'
+    implementation project(":core:common")
+
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version")
+
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     androidTestImplementation platform('androidx.compose:compose-bom:2022.10.00')
@@ -79,28 +84,11 @@ dependencies {
     def nav_version = "2.5.3"
     implementation("androidx.navigation:navigation-compose:$nav_version")
 
-    // opencsv
-    implementation("com.opencsv:opencsv:5.7.1")
-
-    // HILT
-    implementation("com.google.dagger:hilt-android:$hilt_version")
-    kapt("com.google.dagger:hilt-android-compiler:$hilt_version")
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
 
-    // retrofit
-    def retrofit_version = "2.9.0"
-    implementation("com.squareup.retrofit2:retrofit:$retrofit_version")
-    implementation("com.squareup.moshi:moshi-kotlin:1.14.0")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
-    implementation("com.squareup.okhttp3:okhttp:4.11.0")
-
-    def room_version = "2.5.1"
-    implementation("androidx.room:room-runtime:$room_version")
-    implementation("androidx.room:room-ktx:$room_version")
-    kapt("androidx.room:room-compiler:$room_version")
-
-    // timber
-    implementation 'com.jakewharton.timber:timber:5.0.1'
+    // dagger - hilt
+    implementation("com.google.dagger:hilt-android:$hilt_version")
+    kapt("com.google.dagger:hilt-android-compiler:$hilt_version")
 
     constraints {
         modules {
@@ -118,5 +106,6 @@ dependencies {
             }
         }
     }
+
 
 }

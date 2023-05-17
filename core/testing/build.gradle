@@ -1,12 +1,10 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
-    id("com.google.dagger.hilt.android")
-    id 'kotlin-kapt'
 }
 
 android {
-    namespace 'com.riopermana.network'
+    namespace 'com.riopermana.testing'
     compileSdk 33
 
     defaultConfig {
@@ -34,17 +32,5 @@ android {
 
 dependencies {
     implementation project(":core:common")
-    implementation project(":core:testing")
-
-    // dagger - hilt
-    implementation("com.google.dagger:hilt-android:$hilt_version")
-    kapt("com.google.dagger:hilt-android-compiler:$hilt_version")
-
-    // retrofit
-    def retrofit_version = "2.9.0"
-    implementation("com.squareup.retrofit2:retrofit:$retrofit_version")
-    implementation("com.squareup.moshi:moshi-kotlin:1.14.0")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
-    implementation("com.squareup.okhttp3:okhttp:4.11.0")
-
+    api('junit:junit:4.13.2')
 }
