@@ -1,8 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
-    id("com.google.dagger.hilt.android")
-    id 'kotlin-kapt'
+    id("riopermana.stockmarket.hilt")
 }
 
 android {
@@ -40,9 +39,4 @@ dependencies {
 
     // opencsv
     api("com.opencsv:opencsv:5.7.1")
-
-    // dagger - hilt
-    implementation("com.google.dagger:hilt-android:$hilt_version")
-    kapt("com.google.dagger:hilt-android-compiler:$hilt_version")
-
 }

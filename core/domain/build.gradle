@@ -1,8 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
-    id("com.google.dagger.hilt.android")
-    id "kotlin-kapt"
+    id("riopermana.stockmarket.hilt")
 }
 
 android {
@@ -35,8 +34,4 @@ android {
 dependencies {
     implementation project(":core:common")
     implementation project(":core:testing")
-
-    // dagger - hilt
-    implementation("com.google.dagger:hilt-android:$hilt_version")
-    kapt("com.google.dagger:hilt-android-compiler:$hilt_version")
 }
