@@ -8,9 +8,6 @@ android {
 
     defaultConfig {
         applicationId "com.riopermana.stockmarket"
-
-        versionCode 1
-        versionName "1.0"
     }
 
     buildFeatures {
