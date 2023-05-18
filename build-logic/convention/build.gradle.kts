@@ -27,4 +27,10 @@ gradlePlugin {
             implementationClass = "AndroidApplicationConventionPlugin"
         }
     }
+    plugins {
+        register("androidLibrary") {
+            id = "riopermana.stockmarket.library"
+            implementationClass = "AndroidLibraryConventionPlugin"
+        }
+    }
 }
