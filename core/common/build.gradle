@@ -17,5 +17,5 @@ dependencies {
     api("com.jakewharton.timber:timber:$timber_version")
 
     // opencsv
-    api("com.opencsv:opencsv:5.7.1")
+    implementation("com.opencsv:opencsv:5.7.1")
 }

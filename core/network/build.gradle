@@ -7,6 +7,10 @@ android {
     namespace 'com.riopermana.network'
     defaultConfig {
         consumerProguardFiles "consumer-rules.pro"
+        buildConfigField("String", "BASE_URL", "\"https://www.alphavantage.co\"")
+
+        // Free API key
+        buildConfigField("String", "API_KEY", "\"9T2PJ0GF7X81810P\"")
     }
 }
 
@@ -20,5 +24,11 @@ dependencies {
     implementation("com.squareup.moshi:moshi-kotlin:1.14.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
     implementation("com.squareup.okhttp3:okhttp:4.11.0")
+
+    // mockwebserver
+    testImplementation("com.squareup.okhttp3:mockwebserver:4.11.0")
+
+    // coroutine test
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4"
 
 }
