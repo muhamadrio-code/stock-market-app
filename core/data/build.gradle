@@ -13,4 +13,12 @@ android {
 dependencies {
     implementation project(":core:common")
     implementation project(":core:testing")
+    implementation project(":core:database")
+    implementation project(":core:network")
+
+    // mockito
+    testImplementation "org.mockito:mockito-core:5.3.1"
+
+    // coroutine test
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4"
 }
