@@ -1,14 +1,13 @@
 package com.riopermana.data.repository
 
-import com.riopermana.data.mapper.toEntity
+import com.riopermana.common.Resource
+import com.riopermana.data.Synchronizer
 import com.riopermana.data.model.CompanyListings
 import com.riopermana.data.repository.contract.ICompanyListingsRepository
 import com.riopermana.database.CompanyListingDao
 import com.riopermana.network.datasource.RemoteDataSource
-import com.riopermana.network.dto.CompanyListingDto
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
 import javax.inject.Inject
 
 class CompanyListingsRepository @Inject constructor (
@@ -16,23 +15,23 @@ class CompanyListingsRepository @Inject constructor (
     private val companyListingsDao: CompanyListingDao
 ) : ICompanyListingsRepository {
 
-    override fun getCompanyListings(): Flow<List<CompanyListings>> {
+    override suspend fun getCompanyListings(): Flow<Resource<List<CompanyListings>>> {
 
         return flow {
-            runCatching {
-                val response = remoteDataSource.getCompanyListing()
-                companyListingsDao.insertCompanyListingsOrAbort(
-                    response.map(CompanyListingDto::toEntity)
-                )
-            }
+            remoteDataSource.getCompanyListing()
+            emit(Resource.Success(emptyList()))
         }
     }
 
-    override fun getCompanyListings(query: String): Flow<List<CompanyListings>> {
+    override fun getCompanyListings(query: String): Flow<Resource<List<CompanyListings>>> {
         throw Exception()
     }
 
     override fun insertCompanyListings(list: List<CompanyListings>) {
         throw Exception()
+    }
+
+    override suspend fun syncWith(synchronizer: Synchronizer): Boolean {
+        TODO("Not yet implemented")
     }
 }
