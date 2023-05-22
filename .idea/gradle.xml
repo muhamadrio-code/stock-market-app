@@ -34,6 +34,7 @@
             <option value="$PROJECT_DIR$/core/domain" />
             <option value="$PROJECT_DIR$/core/network" />
             <option value="$PROJECT_DIR$/core/testing" />
+            <option value="$PROJECT_DIR$/sync" />
           </set>
         </option>
       </GradleProjectSettings>
