@@ -11,7 +11,7 @@ java {
 
 dependencies {
     compileOnly("com.android.tools.build:gradle:8.0.0")
-    compileOnly("org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.20")
+    compileOnly("org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.10")
 }
 
 gradlePlugin {
