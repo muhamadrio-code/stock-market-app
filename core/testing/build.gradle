@@ -14,4 +14,9 @@ android {
 dependencies {
     implementation project(":core:common")
     api('junit:junit:4.13.2')
+    api("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
+    api("androidx.test.espresso:espresso-core:3.5.1")
+    api("androidx.test.ext:junit:1.1.5")
+    api("androidx.test:runner:1.5.2")
+    api("com.google.dagger:hilt-android-testing:${rootProject.ext.get("hilt_version")}")
 }

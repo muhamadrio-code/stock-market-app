@@ -14,16 +14,17 @@ import com.riopermana.data.Synchronizer
 import com.riopermana.data.repository.contract.ICompanyListingsRepository
 import com.riopermana.sync.helper.foregroundInfo
 import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
 @HiltWorker
-class SyncWorker(
-    @Assisted val appContext: Context,
+class SyncWorker @AssistedInject constructor (
+    @Assisted private val appContext: Context,
     @Assisted workerParameters: WorkerParameters,
-    private val companyListingsRepository: ICompanyListingsRepository,
-    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
+    private val dispatcher: CoroutineDispatcher
 ) : CoroutineWorker(appContext, workerParameters), Synchronizer {
 
     override suspend fun getForegroundInfo(): ForegroundInfo =
@@ -31,8 +32,7 @@ class SyncWorker(
 
     override suspend fun doWork(): Result = withContext(dispatcher) {
         traceAsync("sync", 0) {
-            val syncedSuccessfully =
-                withContext(Dispatchers.Default) { companyListingsRepository.sync() }
+            val syncedSuccessfully = true
 
             if (syncedSuccessfully) {
                 Result.success()

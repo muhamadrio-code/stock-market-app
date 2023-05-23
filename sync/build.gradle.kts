@@ -7,14 +7,16 @@ android {
     namespace = "com.riopermana.sync"
 
     defaultConfig {
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.riopermana.testing.StockMarketTestRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
 }
 
+
+
 dependencies {
 
-    implementation(project(":core:testing"))
+    androidTestImplementation(project(":core:testing"))
     implementation(project(":core:common"))
     implementation(project(":core:data"))
 
@@ -25,11 +27,11 @@ dependencies {
 
     val hiltExtVersion = "1.0.0"
     implementation("androidx.hilt:hilt-work:$hiltExtVersion")
-    implementation("androidx.hilt:hilt-compiler:$hiltExtVersion")
-    androidTestImplementation("com.google.dagger:hilt-android-testing:${
-        rootProject.ext.get("hilt_version")
-    }")
+    kapt("androidx.hilt:hilt-compiler:$hiltExtVersion")
+    kaptAndroidTest("com.google.dagger:hilt-android-compiler:${rootProject.ext.get("hilt_version")}")
 
     implementation("androidx.tracing:tracing-ktx:1.1.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.1")
+
+
 }
