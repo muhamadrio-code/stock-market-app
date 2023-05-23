@@ -3,6 +3,7 @@ package com.riopermana.database
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Transaction
 import com.riopermana.database.entities.CompanyListingEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -14,6 +15,23 @@ import kotlinx.coroutines.flow.Flow
  */
 @Dao
 interface CompanyListingDao {
+
+    /**
+     * Executes a transaction to clear the existing data and insert a new list of company listings
+     * and ensure that the database operations are executed as a single atomic transaction.
+     * Within the transaction, it first clears the existing data.
+     */
+    @Transaction
+    suspend fun clearAndInsert(list: List<CompanyListingEntity>) {
+        clearCompanyListings()
+        insertCompanyListingsOrAbort(list)
+    }
+
+    /**
+     * Wipe data from company_listings table.
+     */
+    @Query("DELETE FROM company_listings")
+    suspend fun clearCompanyListings()
 
     /**
      * Inserts a list of company listings into the database or aborts (roll back) the transaction on conflict.

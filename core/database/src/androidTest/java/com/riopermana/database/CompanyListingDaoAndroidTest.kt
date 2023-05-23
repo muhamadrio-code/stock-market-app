@@ -107,5 +107,25 @@ class CompanyListingDaoAndroidTest {
         assertThat(actual5).isEqualTo(expected5)
     }
 
+    @Test
+    fun test_clear_all_company_listings_table() = runTest {
+        val input = listOf(
+            CompanyListingEntity(
+                symbol = "A", name = "Agilent Technologies Inc", exchange = "NYSE"
+            ),
+            CompanyListingEntity(symbol = "AA", name = "Alcoa Corp", exchange = "NYSE"),
+            CompanyListingEntity(
+                symbol = "AAA", name = "AXS FIRST PRIORITY CLO BOND ETF", exchange = "NYSE ARCA"
+            ),
+        )
+
+        val expected = emptyList<CompanyListingEntity>()
+
+        dao.insertCompanyListingsOrAbort(input)
+        dao.clearCompanyListings()
+
+        val actual = dao.getCompanyListings().first()
+        assertThat(actual).isEqualTo(expected)
+    }
 
 }
