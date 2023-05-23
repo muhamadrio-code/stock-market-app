@@ -1,4 +1,4 @@
-package di
+package com.riopermana.data.di
 
 import com.riopermana.data.repository.CompanyListingsRepository
 import com.riopermana.data.repository.contract.ICompanyListingsRepository
