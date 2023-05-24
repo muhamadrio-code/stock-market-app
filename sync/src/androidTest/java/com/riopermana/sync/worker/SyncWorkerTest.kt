@@ -34,15 +34,26 @@ class SyncWorkerTest {
     }
 
     @Test
-    fun testSimple() {
-        val worker = SyncWorker.createOneTimeWorkRequest()
+    fun testSyncWorker() {
+        // Create request
+        val request = SyncWorker.createOneTimeWorkRequest()
+
         val workManager = WorkManager.getInstance(context)
-        val testDriver = WorkManagerTestInitHelper.getTestDriver(context)
+        val testDriver = WorkManagerTestInitHelper.getTestDriver(context)!!
 
-        workManager.enqueue(worker).result.get()
+        // Enqueue and wait for result.
+        workManager.enqueue(request).result.get()
 
-        val preWorkInfo = workManager.getWorkInfoById(worker.id).get()
+        // Get WorkInfo and outputData
+        val preRunWorkInfo = workManager.getWorkInfoById(request.id).get()
 
-        assertEquals(WorkInfo.State.ENQUEUED, preWorkInfo.state)
+        // Assert
+        assertEquals(WorkInfo.State.ENQUEUED, preRunWorkInfo.state)
+
+        // Tells the testing framework that the constraints have been met
+        testDriver.setAllConstraintsMet(request.id)
+
+        val postRequirementWorkInfo = workManager.getWorkInfoById(request.id).get()
+        assertEquals(WorkInfo.State.RUNNING, postRequirementWorkInfo.state)
     }
 }
