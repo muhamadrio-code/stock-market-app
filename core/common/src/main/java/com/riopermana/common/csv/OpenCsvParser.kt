@@ -6,15 +6,11 @@ import com.riopermana.common.exception.CsvParsingException
 import java.io.IOException
 import java.io.InputStream
 import java.io.InputStreamReader
-import javax.inject.Inject
-import javax.inject.Singleton
-import kotlin.jvm.Throws
 
 /**
  * CSV parser backed by OpenCSV.
  * **/
-@Singleton
-class OpenCsvParser @Inject constructor(): CsvParser {
+class OpenCsvParser : CsvParser {
 
     /**
      * Parses CSV (Comma-Separated Values) data from the provided input stream and returns a list of arrays of strings.
