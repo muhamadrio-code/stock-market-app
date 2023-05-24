@@ -23,9 +23,12 @@ interface Syncable {
     suspend fun syncWith(synchronizer: Synchronizer) : Boolean
 }
 
-suspend inline fun <reified T>Synchronizer.syncData(
-    crossinline fetcher: suspend () -> T,
-    crossinline onFetchSuccess: suspend (T) -> Unit
+suspend inline fun <reified T,R>Synchronizer.databaseSync(
+    crossinline fetcher: suspend () -> List<T>,
+    crossinline databaseUpdater: suspend (List<R>) -> Unit,
+    noinline mapper: (T) -> R
 ) : Boolean = suspendRunCatching {
-    onFetchSuccess(fetcher())
+    val remoteData = fetcher()
+    val entities = remoteData.map(mapper::invoke)
+    databaseUpdater(entities)
 }.isSuccess

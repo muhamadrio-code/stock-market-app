@@ -19,9 +19,6 @@ dependencies {
     // mockito
     testImplementation "org.mockito:mockito-core:5.3.1"
 
-    //Mockk
-    testImplementation "io.mockk:mockk:1.12.4"
-
     // coroutine test
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4"
 }

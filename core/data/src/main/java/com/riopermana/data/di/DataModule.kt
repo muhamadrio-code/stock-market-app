@@ -1,7 +1,7 @@
 package com.riopermana.data.di
 
-import com.riopermana.data.repository.CompanyListingsRepository
-import com.riopermana.data.repository.contract.ICompanyListingsRepository
+import com.riopermana.data.repository.OfflineFirstCompanyListingsRepository
+import com.riopermana.data.repository.contract.CompanyListingsRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -12,6 +12,6 @@ import dagger.hilt.components.SingletonComponent
 interface DataModule {
     @Binds
     fun bindsCompanyListingRepository(
-        companyListingsRepository: CompanyListingsRepository
-    ) : ICompanyListingsRepository
+        companyListingsRepository: OfflineFirstCompanyListingsRepository
+    ) : CompanyListingsRepository
 }
