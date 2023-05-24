@@ -1,7 +1,10 @@
 package com.riopermana.network.di
 
+import com.riopermana.common.csv.CsvParser
 import com.riopermana.network.ApiService
 import com.riopermana.network.BuildConfig
+import com.riopermana.network.datasource.RemoteDataSource
+import com.riopermana.network.datasource.StockRemoteDataSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -39,4 +42,12 @@ object NetworkModule {
         .build()
         .create(ApiService::class.java)
 
+    @Provides
+    @Singleton
+    fun providesRemoteDataSource(
+        csvParser: CsvParser,
+        apiService: ApiService
+    ): RemoteDataSource = StockRemoteDataSource(
+        csvParser,apiService
+    )
 }
