@@ -11,6 +11,7 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.OutOfQuotaPolicy
 import androidx.work.WorkerParameters
 import com.riopermana.data.Synchronizer
+import com.riopermana.data.repository.contract.CompanyListingsRepository
 import com.riopermana.sync.helper.foregroundInfo
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
@@ -21,6 +22,7 @@ import kotlinx.coroutines.withContext
 class SyncWorker @AssistedInject constructor (
     @Assisted private val appContext: Context,
     @Assisted workerParameters: WorkerParameters,
+    private val companyListingsRepository: CompanyListingsRepository,
     private val dispatcher: CoroutineDispatcher
 ) : CoroutineWorker(appContext, workerParameters), Synchronizer {
 
@@ -29,7 +31,7 @@ class SyncWorker @AssistedInject constructor (
 
     override suspend fun doWork(): Result = withContext(dispatcher) {
         traceAsync("sync", 0) {
-            val syncedSuccessfully = true
+            val syncedSuccessfully = companyListingsRepository.sync()
 
             if (syncedSuccessfully) {
                 Result.success()
@@ -51,7 +53,7 @@ class SyncWorker @AssistedInject constructor (
         fun createOneTimeWorkRequest() = OneTimeWorkRequestBuilder<DelegatingWorker>()
             .setConstraints(syncConstraints)
             .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
-            .setInputData(DelegatingWorker::class.delegateData())
+            .setInputData(SyncWorker::class.delegateData())
             .build()
     }
 }
