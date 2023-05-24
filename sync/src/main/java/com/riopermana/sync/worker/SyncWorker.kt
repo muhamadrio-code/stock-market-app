@@ -11,14 +11,11 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.OutOfQuotaPolicy
 import androidx.work.WorkerParameters
 import com.riopermana.data.Synchronizer
-import com.riopermana.data.repository.contract.ICompanyListingsRepository
 import com.riopermana.sync.helper.foregroundInfo
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
 @HiltWorker
 class SyncWorker @AssistedInject constructor (
