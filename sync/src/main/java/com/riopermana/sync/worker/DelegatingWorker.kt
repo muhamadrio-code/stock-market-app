@@ -55,7 +55,7 @@ class DelegatingWorker constructor(
                 .hiltWorkerFactory()
                 .createWorker(context, workerClassName, workerParameters)
                     as? CoroutineWorker
-        )
+        ) { "Unable to find appropriate worker" }
 
     override suspend fun doWork(): Result =
         delegateWorker.doWork()
