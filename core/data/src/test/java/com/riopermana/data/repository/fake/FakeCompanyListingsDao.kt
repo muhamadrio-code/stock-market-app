@@ -1,4 +1,4 @@
-package fake
+package com.riopermana.data.repository.fake
 
 import com.riopermana.database.CompanyListingDao
 import com.riopermana.database.entities.CompanyListingEntity

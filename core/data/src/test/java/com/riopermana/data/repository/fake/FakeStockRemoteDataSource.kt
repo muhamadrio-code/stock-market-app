@@ -1,4 +1,4 @@
-package fake
+package com.riopermana.data.repository.fake
 
 import com.riopermana.network.datasource.RemoteDataSource
 import com.riopermana.network.dto.CompanyListingDto
