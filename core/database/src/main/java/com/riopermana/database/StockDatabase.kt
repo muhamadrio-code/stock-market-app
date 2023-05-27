@@ -6,7 +6,8 @@ import com.riopermana.database.entities.CompanyListingEntity
 
 @Database(
     version = 1,
-    entities = [CompanyListingEntity::class]
+    entities = [CompanyListingEntity::class],
+    exportSchema = false
 )
 abstract class StockDatabase : RoomDatabase() {
     abstract val companyListingDao: CompanyListingDao
