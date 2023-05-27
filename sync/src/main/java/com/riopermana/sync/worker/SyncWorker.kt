@@ -36,7 +36,7 @@ class SyncWorker @AssistedInject constructor (
             if (syncedSuccessfully) {
                 Result.success()
             } else {
-                Result.retry()
+                Result.failure()
             }
         }
     }

@@ -7,6 +7,7 @@ import android.content.Context
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.work.ForegroundInfo
+import com.riopermana.sync.R
 
 private const val syncWorkerNotificationId = 0
 private const val syncWorkerNotificationChannelId = "stockmarket.SyncChannelID"
@@ -38,6 +39,7 @@ private fun Context.syncWorkNotification(): Notification {
         syncWorkerNotificationChannelId
     )
         .setContentTitle("Stock Market")
+        .setSmallIcon(androidx.core.R.drawable.notification_bg_low)
         .setPriority(NotificationCompat.PRIORITY_DEFAULT)
         .build()
 }

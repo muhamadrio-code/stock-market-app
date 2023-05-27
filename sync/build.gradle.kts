@@ -10,6 +10,13 @@ android {
         testInstrumentationRunner = "com.riopermana.testing.StockMarketTestRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
+
+    packaging {
+        resources {
+            pickFirsts.add("META-INF/LICENSE.md")
+            pickFirsts.add("META-INF/LICENSE-notice.md")
+        }
+    }
 }
 
 

@@ -6,7 +6,7 @@ import com.riopermana.database.CompanyListingDao
 import com.riopermana.database.entities.CompanyListingEntity
 import com.riopermana.network.datasource.RemoteDataSource
 import com.riopermana.network.dto.CompanyListingDto
-import fake.FakeCompanyListingsDao
+import com.riopermana.data.repository.fake.FakeCompanyListingsDao
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
