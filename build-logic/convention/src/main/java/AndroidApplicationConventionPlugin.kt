@@ -7,6 +7,7 @@ import org.gradle.api.plugins.ExtensionAware
 import org.gradle.kotlin.dsl.configure
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions
 
+@Suppress("unused")
 class AndroidApplicationConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
@@ -38,7 +39,7 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
     }
 }
 
-internal fun Project.configureAndroid(
+internal fun configureAndroid(
     extension: CommonExtension<*, *, *, *>,
 ) {
     extension.apply {
@@ -56,7 +57,12 @@ internal fun Project.configureAndroid(
         kotlinOptions {
             jvmTarget = "17"
         }
-
+        packaging {
+            resources {
+                pickFirsts.add("META-INF/LICENSE.md")
+                pickFirsts.add("META-INF/LICENSE-notice.md")
+            }
+        }
     }
 }
 
