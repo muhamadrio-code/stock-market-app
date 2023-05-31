@@ -2,7 +2,6 @@ package com.riopermana.data.util
 
 import android.content.Context
 import android.net.ConnectivityManager
-import android.net.ConnectivityManager.NetworkCallback
 import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.NetworkRequest
@@ -13,13 +12,13 @@ import kotlinx.coroutines.flow.callbackFlow
 import javax.inject.Inject
 
 class NetworkConnectivityMonitor @Inject constructor(
-    @ApplicationContext private val context: Context,
+    @ApplicationContext context: Context
 ) : NetworkMonitor {
     override val isOnline: Flow<Boolean> = callbackFlow {
         val connectivityManager =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
-        val callback = object : NetworkCallback() {
+        val callback = object : ConnectivityManager.NetworkCallback() {
             override fun onAvailable(network: Network) {
                 channel.trySend(connectivityManager.isCurrentlyConnected())
             }
