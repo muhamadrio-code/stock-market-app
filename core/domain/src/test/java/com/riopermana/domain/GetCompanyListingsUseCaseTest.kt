@@ -29,7 +29,7 @@ class GetCompanyListingsUseCaseTest {
     }
 
     @Test
-    fun `test GetCompanyListings return data`() = runTest {
+    fun `test GetCompanyListings with null query return data`() = runTest {
         val expected = listOf(
             CompanyListings(1, "A", "Agilent Technologies Inc", "NYSE"),
             CompanyListings(2, "AA", "Alcoa Corp", "NYSE"),
@@ -62,13 +62,16 @@ class GetCompanyListingsUseCaseTest {
 
     @Test
     fun `test GetCompanyListings with empty string query return data`() = runTest {
-        val expected = emptyList<CompanyListings>()
+        val expected = listOf(
+            CompanyListings(1, "A", "Agilent Technologies Inc", "NYSE"),
+            CompanyListings(2, "AA", "Oragil Corp", "NYSE"),
+        )
 
         val query = ""
-        every { companyListingsRepository.getCompanyListings(query) } returns emptyFlow()
+        every { companyListingsRepository.getCompanyListings() } returns flowOf(expected)
 
-        val actual = sut(query).toList().flatten()
-
+        val actual = sut(query).first()
+        verify(exactly = 1) { companyListingsRepository.getCompanyListings() }
         assertEquals(expected, actual)
     }
 }
