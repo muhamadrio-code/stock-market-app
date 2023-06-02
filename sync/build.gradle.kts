@@ -1,6 +1,7 @@
 plugins {
     id("riopermana.stockmarket.library")
     id("riopermana.stockmarket.hilt")
+    id("riopermana.stockmarket.co.android-test")
 }
 
 android {
@@ -10,20 +11,12 @@ android {
         testInstrumentationRunner = "com.riopermana.testing.StockMarketTestRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
-
-    packaging {
-        resources {
-            pickFirsts.add("META-INF/LICENSE.md")
-            pickFirsts.add("META-INF/LICENSE-notice.md")
-        }
-    }
 }
 
 
 
 dependencies {
 
-    androidTestImplementation(project(":core:testing"))
     implementation(project(":core:common"))
     implementation(project(":core:data"))
 
@@ -36,6 +29,9 @@ dependencies {
     implementation("androidx.hilt:hilt-work:$hiltExtVersion")
     kapt("androidx.hilt:hilt-compiler:$hiltExtVersion")
     kaptAndroidTest("com.google.dagger:hilt-android-compiler:${rootProject.ext.get("hilt_version")}")
+    androidTestImplementation("com.google.dagger:hilt-android-testing:${
+        rootProject.ext.get("hilt_version")
+    }")
 
     implementation("androidx.tracing:tracing-ktx:1.1.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.1")

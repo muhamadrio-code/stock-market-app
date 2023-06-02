@@ -1,6 +1,7 @@
 plugins {
     id("riopermana.stockmarket.library")
     id("riopermana.stockmarket.hilt")
+    id("riopermana.stockmarket.co.android-test")
 }
 
 
@@ -14,34 +15,9 @@ android {
 
 dependencies {
     implementation project(":core:common")
-    implementation project(":core:testing")
 
     def room_version = "2.5.1"
     implementation("androidx.room:room-runtime:$room_version")
     implementation("androidx.room:room-ktx:$room_version")
     kapt("androidx.room:room-compiler:$room_version")
-
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-    androidTestImplementation "com.google.truth:truth:1.0.1"
-
-    // coroutine test
-    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4"
-
-    constraints {
-        modules {
-            module("org.jetbrains.kotlin:kotlin-stdlib-jdk7") {
-                replacedBy(
-                        "org.jetbrains.kotlin:kotlin-stdlib",
-                        "kotlin-stdlib-jdk7 is now part of kotlin-stdlib"
-                )
-            }
-            module("org.jetbrains.kotlin:kotlin-stdlib-jdk8") {
-                replacedBy(
-                        "org.jetbrains.kotlin:kotlin-stdlib",
-                        "kotlin-stdlib-jdk8 is now part of kotlin-stdlib"
-                )
-            }
-        }
-    }
 }
