@@ -33,4 +33,22 @@ gradlePlugin {
             implementationClass = "AndroidLibraryConventionPlugin"
         }
     }
+    plugins {
+        register("androidLibraryCompose") {
+            id = "riopermana.stockmarket.library.compose"
+            implementationClass = "AndroidLibraryComposeConventionPlugin"
+        }
+    }
+    plugins {
+        register("androidCoroutineUnitTest") {
+            id = "riopermana.stockmarket.co.unit-test"
+            implementationClass = "CoroutineUnitTestConventionPlugin"
+        }
+    }
+    plugins {
+        register("coroutineAndroidTest") {
+            id = "riopermana.stockmarket.co.android-test"
+            implementationClass = "CoroutineAndroidTestConventionPlugin"
+        }
+    }
 }

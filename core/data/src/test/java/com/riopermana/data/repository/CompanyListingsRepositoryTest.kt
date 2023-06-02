@@ -2,11 +2,16 @@ package com.riopermana.data.repository
 
 import com.riopermana.data.Synchronizer
 import com.riopermana.data.model.CompanyListings
+import com.riopermana.data.repository.fake.FakeCompanyListingsDao
 import com.riopermana.database.CompanyListingDao
 import com.riopermana.database.entities.CompanyListingEntity
 import com.riopermana.network.datasource.RemoteDataSource
 import com.riopermana.network.dto.CompanyListingDto
-import com.riopermana.data.repository.fake.FakeCompanyListingsDao
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
@@ -16,9 +21,6 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
-import org.mockito.Mockito.mock
-import org.mockito.Mockito.verify
-import org.mockito.Mockito.`when`
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class CompanyListingsRepositoryTest {
@@ -30,8 +32,8 @@ class CompanyListingsRepositoryTest {
 
     @Before
     fun setUp() {
-        mockRemoteDataSource = mock(RemoteDataSource::class.java)
-        mockDao = mock(CompanyListingDao::class.java)
+        mockRemoteDataSource = mockk()
+        mockDao = mockk()
         repository = OfflineFirstCompanyListingsRepository(mockRemoteDataSource, mockDao)
     }
 
@@ -43,17 +45,15 @@ class CompanyListingsRepositoryTest {
             CompanyListings(2, "AA", "Alcoa Corp", "NYSE"),
         )
 
-        `when`(mockDao.getCompanyListings()).thenReturn(
-            flowOf(
-                listOf(
-                    CompanyListingEntity(1, "A", "Agilent Technologies Inc", "NYSE"),
-                    CompanyListingEntity(2, "AA", "Alcoa Corp", "NYSE"),
-                )
+        every { mockDao.getCompanyListings() } returns flowOf(
+            listOf(
+                CompanyListingEntity(1, "A", "Agilent Technologies Inc", "NYSE"),
+                CompanyListingEntity(2, "AA", "Alcoa Corp", "NYSE"),
             )
         )
 
         val actual = repository.getCompanyListings().first()
-        verify(mockDao).getCompanyListings()
+        verify(exactly = 1) { mockDao.getCompanyListings() }
         assertEquals(expected, actual)
 
     }
@@ -63,12 +63,19 @@ class CompanyListingsRepositoryTest {
         val query = "aa"
         val expected = listOf(CompanyListings(2, "AA", "Alcoa Corp", "NYSE"))
 
-        `when`(mockDao.getCompanyListings(query)).thenReturn(
-            flowOf(listOf(CompanyListingEntity(2, "AA", "Alcoa Corp", "NYSE")))
+        every { mockDao.getCompanyListings(query) } returns flowOf(
+            listOf(
+                CompanyListingEntity(
+                    2,
+                    "AA",
+                    "Alcoa Corp",
+                    "NYSE"
+                )
+            )
         )
 
         val actual = repository.getCompanyListings(query).first()
-        verify(mockDao).getCompanyListings(query)
+        verify(exactly = 1) { mockDao.getCompanyListings(query) }
         assertEquals(expected, actual)
     }
 
@@ -77,7 +84,8 @@ class CompanyListingsRepositoryTest {
     fun `test databaseSync, verify fetch data from internet, clear current data and insert new data to the database`() =
         testScope.runTest {
             val fakeCompanyListingsDao = FakeCompanyListingsDao()
-            val repo = OfflineFirstCompanyListingsRepository(mockRemoteDataSource,fakeCompanyListingsDao)
+            val repo =
+                OfflineFirstCompanyListingsRepository(mockRemoteDataSource, fakeCompanyListingsDao)
             val noopSynchronizer = object : Synchronizer {}
             val remoteData = listOf(
                 CompanyListingDto("AZA", "Foo tch", "NYE"),
@@ -85,14 +93,14 @@ class CompanyListingsRepositoryTest {
             )
 
             val expected = listOf(
-                CompanyListingEntity(0,"AZA", "Foo tch", "NYE"),
-                CompanyListingEntity(0,"AKA", "Thursday Corp", "NYSE"),
+                CompanyListingEntity(0, "AZA", "Foo tch", "NYE"),
+                CompanyListingEntity(0, "AKA", "Thursday Corp", "NYSE"),
             )
 
-            `when`(mockRemoteDataSource.getCompanyListing()).thenReturn(remoteData)
+            coEvery { mockRemoteDataSource.getCompanyListing() } returns remoteData
 
             repo.syncWith(noopSynchronizer)
-            verify(mockRemoteDataSource).getCompanyListing()
+            coVerify { mockRemoteDataSource.getCompanyListing() }
 
             val actual = fakeCompanyListingsDao.getCompanyListings().first()
 

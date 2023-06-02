@@ -15,7 +15,4 @@ dependencies {
     implementation(project(":core:common"))
     implementation(project(":core:database"))
     implementation(project(":core:network"))
-
-    // mockito
-    testImplementation("org.mockito:mockito-core:5.3.1")
 }
