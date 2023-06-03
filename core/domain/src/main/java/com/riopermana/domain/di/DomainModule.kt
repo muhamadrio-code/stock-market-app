@@ -1,19 +1,23 @@
 package com.riopermana.domain.di
 
+import com.riopermana.common.helper.ResourcesHelper
+import com.riopermana.data.repository.contract.CompanyListingsRepository
 import com.riopermana.domain.GetCompanyListingsUseCase
-import dagger.Binds
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-interface DomainModule {
+object DomainModule {
 
-    @Binds
+    @Provides
     @Singleton
     fun bindsGetCompanyListingsUseCase(
-        companyListingsUseCase: GetCompanyListingsUseCase
-    ): GetCompanyListingsUseCase
+        companyListingsRepository: CompanyListingsRepository,
+        resourcesHelper: ResourcesHelper<String>
+    ): GetCompanyListingsUseCase =
+        GetCompanyListingsUseCase(companyListingsRepository, resourcesHelper)
 }
