@@ -37,7 +37,7 @@ class OfflineFirstCompanyListingsRepository @Inject constructor(
     override suspend fun syncWith(synchronizer: Synchronizer): Boolean {
         return synchronizer.databaseSync(
             fetcher = remoteDataSource::getCompanyListing,
-            databaseUpdater = companyListingsDao::clearAndInsert,
+            databaseUpdater = companyListingsDao::insertOrIgnoreCompanyListings,
             mapper = CompanyListingDto::toEntity
         )
     }
