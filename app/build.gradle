@@ -31,9 +31,11 @@ dependencies {
     implementation project(":core:common")
     implementation project(":sync")
     implementation project(":presentation:ui")
+    implementation project(":feature:company-listings")
 
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version")
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.3")
 
     implementation 'androidx.activity:activity-compose:1.7.1'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.11'
 }
