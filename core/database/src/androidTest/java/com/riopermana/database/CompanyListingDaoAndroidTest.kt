@@ -34,24 +34,41 @@ class CompanyListingDaoAndroidTest {
     }
 
     @Test
+    fun test_insert_CompanyListingsEntity_ignore_on_conflict() = runTest {
+        val input = listOf(
+            CompanyListingEntity(
+                symbol = "A", name = "Agilent Technologies Inc", exchange = "NYSE"
+            )
+        )
+
+        val expected = listOf(
+            CompanyListingEntity("A", "Agilent Technologies Inc", "NYSE"),
+        )
+
+        dao.insertOrIgnoreCompanyListings(input)
+
+        val actual1 = dao.getCompanyListings().first()
+        assertThat(actual1).isEqualTo(expected)
+
+        dao.insertOrIgnoreCompanyListings(input)
+
+        val actual2 = dao.getCompanyListings().first()
+        assertThat(actual2).isEqualTo(expected)
+    }
+
+    @Test
     fun test_get_all_company_listings_return_data() = runTest {
         val input = listOf(
             CompanyListingEntity(
                 symbol = "A", name = "Agilent Technologies Inc", exchange = "NYSE"
             ),
-            CompanyListingEntity(symbol = "AA", name = "Alcoa Corp", exchange = "NYSE"),
-            CompanyListingEntity(
-                symbol = "AAA", name = "AXS FIRST PRIORITY CLO BOND ETF", exchange = "NYSE ARCA"
-            ),
         )
 
         val expected = listOf(
-            CompanyListingEntity(1, "A", "Agilent Technologies Inc", "NYSE"),
-            CompanyListingEntity(2, "AA", "Alcoa Corp", "NYSE"),
-            CompanyListingEntity(3, "AAA", "AXS FIRST PRIORITY CLO BOND ETF", "NYSE ARCA"),
+            CompanyListingEntity("A", "Agilent Technologies Inc", "NYSE"),
         )
 
-        dao.insertCompanyListingsOrAbort(input)
+        dao.insertOrIgnoreCompanyListings(input)
 
         val actual = dao.getCompanyListings().first()
         assertThat(actual).isEqualTo(expected)
@@ -60,30 +77,30 @@ class CompanyListingDaoAndroidTest {
     @Test
     fun test_get_company_listings_by_query_return_data() = runTest {
         val inputData = listOf(
-            CompanyListingEntity(1, "A", "Agilent Technologies Inc", "NYSE"),
-            CompanyListingEntity(2, "AA", "Alcoa Corp", "NYSE"),
-            CompanyListingEntity(3, "AAA", "AAX FIRST PRIORITY CLO BOND ETF", "NYSE ARCA"),
-            CompanyListingEntity(4, "AEAE", "AltEnergy Acquisition Corp - Class A", "NASDAQ"),
-            CompanyListingEntity(5, "ADXN", "Addex Therapeutics Ltd", "NASDAQ"),
-            CompanyListingEntity(6, "AA", "Aether Ltd", "NASDAQ"),
+            CompanyListingEntity("A", "Agilent Technologies Inc", "NYSE"),
+            CompanyListingEntity("AA", "Alcoa Corp", "NYSE"),
+            CompanyListingEntity("AAA", "AAX FIRST PRIORITY CLO BOND ETF", "NYSE ARCA"),
+            CompanyListingEntity("AEAE", "AltEnergy Acquisition Corp - Class A", "NASDAQ"),
+            CompanyListingEntity("ADXN", "Addex Therapeutics Ltd", "NASDAQ"),
+            CompanyListingEntity("AA", "Aether Ltd", "NASDAQ"),
         )
 
         val expected1 = listOf(
-            CompanyListingEntity(1, "A", "Agilent Technologies Inc", "NYSE"),
+            CompanyListingEntity("A", "Agilent Technologies Inc", "NYSE"),
         )
 
         val expected2 = listOf(
-            CompanyListingEntity(3, "AAA", "AAX FIRST PRIORITY CLO BOND ETF", "NYSE ARCA"),
+            CompanyListingEntity("AAA", "AAX FIRST PRIORITY CLO BOND ETF", "NYSE ARCA"),
         )
 
         val expected3 = listOf(
-            CompanyListingEntity(6, "AA", "Aether Ltd", "NASDAQ"),
+            CompanyListingEntity("AA", "Aether Ltd", "NASDAQ"),
         )
 
         val expected5 = listOf(
-            CompanyListingEntity(2, "AA", "Alcoa Corp", "NYSE"),
-            CompanyListingEntity(3, "AAA", "AAX FIRST PRIORITY CLO BOND ETF", "NYSE ARCA"),
-            CompanyListingEntity(6, "AA", "Aether Ltd", "NASDAQ"),
+            CompanyListingEntity("AA", "Alcoa Corp", "NYSE"),
+            CompanyListingEntity("AAA", "AAX FIRST PRIORITY CLO BOND ETF", "NYSE ARCA"),
+            CompanyListingEntity("AA", "Aether Ltd", "NASDAQ"),
         )
 
         val query1 = "gil"
@@ -92,7 +109,7 @@ class CompanyListingDaoAndroidTest {
         val query4 = "A"
         val query5 = "AA"
 
-        dao.insertCompanyListingsOrAbort(inputData)
+        dao.insertOrIgnoreCompanyListings(inputData)
 
         val actual1 = dao.getCompanyListings(query1).first()
         val actual2 = dao.getCompanyListings(query2).first()
@@ -105,27 +122,6 @@ class CompanyListingDaoAndroidTest {
         assertThat(actual3).isEqualTo(expected3)
         assertThat(actual4).isEqualTo(inputData)
         assertThat(actual5).isEqualTo(expected5)
-    }
-
-    @Test
-    fun test_clear_all_company_listings_table() = runTest {
-        val input = listOf(
-            CompanyListingEntity(
-                symbol = "A", name = "Agilent Technologies Inc", exchange = "NYSE"
-            ),
-            CompanyListingEntity(symbol = "AA", name = "Alcoa Corp", exchange = "NYSE"),
-            CompanyListingEntity(
-                symbol = "AAA", name = "AXS FIRST PRIORITY CLO BOND ETF", exchange = "NYSE ARCA"
-            ),
-        )
-
-        val expected = emptyList<CompanyListingEntity>()
-
-        dao.insertCompanyListingsOrAbort(input)
-        dao.clearCompanyListings()
-
-        val actual = dao.getCompanyListings().first()
-        assertThat(actual).isEqualTo(expected)
     }
 
 }
