@@ -19,6 +19,7 @@ dependencies {
 
     implementation(project(":core:common"))
     implementation(project(":core:data"))
+    androidTestImplementation(project(":core:testing"))
 
     val workVersion = "2.8.1"
     implementation("androidx.work:work-runtime-ktx:$workVersion")
