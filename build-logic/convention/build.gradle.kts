@@ -12,6 +12,7 @@ java {
 dependencies {
     compileOnly("com.android.tools.build:gradle:8.0.0")
     compileOnly("org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.10")
+    compileOnly("com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin:1.8.10-1.0.9")
 }
 
 gradlePlugin {
@@ -49,6 +50,12 @@ gradlePlugin {
         register("coroutineAndroidTest") {
             id = "riopermana.stockmarket.co.android-test"
             implementationClass = "CoroutineAndroidTestConventionPlugin"
+        }
+    }
+    plugins {
+        register("composeDestinations") {
+            id = "riopermana.stockmarket.compose-destinations"
+            implementationClass = "ComposeDestinationsConventionPlugin"
         }
     }
 }
