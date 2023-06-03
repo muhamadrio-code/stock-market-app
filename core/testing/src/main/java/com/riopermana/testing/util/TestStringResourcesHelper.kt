@@ -1,4 +1,4 @@
-package com.riopermana.domain.test
+package com.riopermana.testing.util
 
 import com.riopermana.common.helper.ResourcesHelper
 

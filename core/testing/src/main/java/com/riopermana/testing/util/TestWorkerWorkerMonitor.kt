@@ -5,11 +5,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
 class TestWorkerWorkerMonitor : SyncWorkerMonitor {
-    private val _isSyncing = MutableStateFlow(true)
+    private val _isResultSuccess = MutableStateFlow(true)
     override val isResultSuccess: Flow<Boolean>
-        get() = _isSyncing
+        get() = _isResultSuccess
 
-    fun setSyncing(isSyncing: Boolean) {
-        _isSyncing.value = isSyncing
+    fun setResult(isSuccess: Boolean) {
+        _isResultSuccess.value = isSuccess
     }
 }
