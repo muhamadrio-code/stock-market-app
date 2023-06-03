@@ -19,11 +19,11 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 
 @HiltWorker
-class SyncWorker @AssistedInject constructor (
+class SyncWorker @AssistedInject constructor(
     @Assisted private val appContext: Context,
     @Assisted workerParameters: WorkerParameters,
     private val companyListingsRepository: CompanyListingsRepository,
-    private val dispatcher: CoroutineDispatcher
+    private val dispatcher: CoroutineDispatcher,
 ) : CoroutineWorker(appContext, workerParameters), Synchronizer {
 
     override suspend fun getForegroundInfo(): ForegroundInfo =
@@ -33,10 +33,10 @@ class SyncWorker @AssistedInject constructor (
         traceAsync("sync", 0) {
             val syncedSuccessfully = companyListingsRepository.sync()
 
-            if (syncedSuccessfully) {
+            if (syncedSuccessfully){
                 Result.success()
             } else {
-                Result.failure()
+                Result.retry()
             }
         }
     }
