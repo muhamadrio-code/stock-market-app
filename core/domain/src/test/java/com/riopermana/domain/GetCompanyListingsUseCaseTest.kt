@@ -8,7 +8,7 @@ import com.riopermana.common.isLoading
 import com.riopermana.common.isSuccess
 import com.riopermana.data.model.CompanyListings
 import com.riopermana.data.repository.contract.CompanyListingsRepository
-import com.riopermana.domain.test.TestStringResourcesHelper
+import com.riopermana.testing.util.TestStringResourcesHelper
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
