@@ -5,23 +5,16 @@ import com.riopermana.database.entities.CompanyListingEntity
 import com.riopermana.network.dto.CompanyListingDto
 
 fun CompanyListingDto.toEntity(): CompanyListingEntity = CompanyListingEntity(
-    name = this.name,
-    symbol = this.symbol,
-    exchange = this.exchange
+    symbol = this.symbol ?: "",
+    name = this.name ?: "",
+    exchange = this.exchange ?: ""
 )
 
 fun List<CompanyListingEntity>.toListExternalModel(): List<CompanyListings> =
     mapNotNull(CompanyListingEntity::toListExternalModel)
 
-fun CompanyListingEntity.toListExternalModel(): CompanyListings? {
-    if (name == null) return null
-    if (exchange == null) return null
-    if (symbol == null) return null
-
-    return CompanyListings(
-        id = this.id,
-        name = this.name!!,
-        symbol = this.symbol!!,
-        exchange = this.exchange!!
-    )
-}
+fun CompanyListingEntity.toListExternalModel(): CompanyListings = CompanyListings(
+    name = this.name,
+    symbol = this.symbol,
+    exchange = this.exchange
+)
