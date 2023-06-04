@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="no_data">No Data</string>
+  <string name="no_matches_query">No data matches with</string>
+  <string name="no_connection_error">No Data,\nMake sure you are connected to the internet</string>
+</resources>

@@ -21,5 +21,7 @@ include ':core:testing'
 include ':core:database'
 include ':core:domain'
 include ':core:data'
-
 include ':sync'
+include ':presentation:design-system'
+include ':feature:company-listings'
+include ':presentation:ui'

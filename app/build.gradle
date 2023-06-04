@@ -31,6 +31,7 @@ dependencies {
     implementation project(":core:common")
     implementation project(":sync")
     implementation project(":presentation:ui")
+    implementation project(":presentation:design-system")
     implementation project(":feature:company-listings")
 
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version")
